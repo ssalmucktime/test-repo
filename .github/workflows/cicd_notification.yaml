@@ -1,0 +1,19 @@
+name: CI/CD Discord Notification
+
+on:
+  workflow_run:
+    workflows:
+      - '**'
+      - "!pr_notification.yaml"
+    types:
+      - completed
+
+jobs:
+  call-reusable-cicd-notification:
+    name: Call Reusable CICD Notification
+    uses: ssalmucktime/.github/.github/workflows/reusable_cicd_notification.yaml@main
+    with:
+      workflow_run: ${{ toJSON(github.event) }}
+    secrets:
+      CICD_DISCORD_WEBHOOK: ${{ secrets.CICD_DISCORD_WEBHOOK }}
+

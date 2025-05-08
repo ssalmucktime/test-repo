@@ -1,0 +1,15 @@
+name: PR Discord Notification
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  call-reusable-pr-notification:
+    name: Call Reusable PR Notification
+    uses: ssalmucktime/.github/.github/workflows/reusable_pr_notification.yaml@main
+    with:
+      pr_event: ${{ toJSON(github.event) }}
+    secrets:
+      PR_DISCORD_WEBHOOK: ${{ secrets.PR_DISCORD_WEBHOOK }}
